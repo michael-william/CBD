@@ -41,12 +41,22 @@ def load_data(filename=None):
     df_sa=pd.read_excel(data_source_sa)
     data_source_nl = 'https://github.com/michael-william/CBD/raw/master/resources/cbd_nl.xlsx'
     df_nl=pd.read_excel(data_source_nl)
-    return df_us, df_sa, df_nl
+    data_source_es = 'https://github.com/michael-william/CBD/raw/master/resources/cbd_es.xlsx'
+    df_es=pd.read_excel(data_source_es)
+    data_source_de = 'https://github.com/michael-william/CBD/raw/master/resources/cbd_de.xlsx'
+    df_de=pd.read_excel(data_source_de)
+    data_source_bel = 'https://github.com/michael-william/CBD/raw/master/resources/cbd_bel.xlsx'
+    df_bel=pd.read_excel(data_source_bel)
+    data_source_ir = 'https://github.com/michael-william/CBD/raw/master/resources/cbd_ir.xlsx'
+    df_ir=pd.read_excel(data_source_ir)
+    data_source_fr = 'https://github.com/michael-william/CBD/raw/master/resources/cbd_fr.xlsx'
+    df_fr=pd.read_excel(data_source_fr)
+    return df_us, df_sa, df_nl , df_es, df_de, df_bel, df_ir, df_fr
 
-df_us, df_sa, df_nl = load_data()
+df_us, df_sa, df_nl, df_es, df_de, df_bel, df_ir, df_fr = load_data()
 
 def user_input_features():
-        countries = ['South Africa', 'Netherlands', 'United States']
+        countries = ['South Africa', 'Netherlands', 'United States', 'Ireland', 'Spain', 'Germany', 'Belgium', 'France']
         country = st.selectbox('Country', countries)
         #latitude = st.sidebar.slider('Latitude', 50.770041, 53.333967, 51.2)
         #longitude = st.sidebar.slider('Longitude', 3.554188, 7.036756, 5.2)
@@ -66,6 +76,16 @@ def main():
             predict_df = df_sa
         elif country == 'Netherlands':
             predict_df = df_nl
+        elif country == 'Germany':
+            predict_df = df_de
+        elif country == 'Spain':
+            predict_df = df_es
+        elif country == 'France':
+            predict_df = df_fr
+        elif country == 'Belgium':
+            predict_df = df_bel
+        elif country == 'Ireland':
+            predict_df = df_ir
         else: 
             predict_df = df_us
         return predict_df 
