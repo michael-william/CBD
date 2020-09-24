@@ -28,11 +28,11 @@ A score of 0 means there was not enough data for this term.
 
 @st.cache
 def load_data(filename=None):
-    data_source_us = '/Users/michaelcondon/Documents/GitHub/CBD/CBD_resources/cbd_us.xlsx'
+    data_source_us = 'https://github.com/michael-william/CBD/raw/master/resources/cbd_us.xlsx'
     df_us=pd.read_excel(data_source_us)
-    data_source_sa = '/Users/michaelcondon/Documents/GitHub/CBD/CBD_resources/cbd_sa.xlsx'
+    data_source_sa = 'https://github.com/michael-william/CBD/raw/master/resources/cbd_sa.xlsx'
     df_sa=pd.read_excel(data_source_sa)
-    data_source_nl = '/Users/michaelcondon/Documents/GitHub/CBD/CBD_resources/cbd_nl.xlsx'
+    data_source_nl = 'https://github.com/michael-william/CBD/raw/master/resources/cbd_nl.xlsx'
     df_nl=pd.read_excel(data_source_nl)
     return df_us, df_sa, df_nl
 
@@ -86,8 +86,9 @@ def main():
         forecast_display.columns = ['Week', 'Prediction', 'Trend', 'Lower range', 'Upper range']
         forecast_display = forecast_display.set_index('Week')
         forecast_display = np.ceil(forecast_display[['Prediction', 'Trend', 'Lower range', 'Upper range']])
-        st.write(forecast_display.tail(periods))
         st.plotly_chart(fig, use_container_width=True)
+        st.write(forecast_display.tail(periods))
+        
 
     
 
