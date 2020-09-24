@@ -7,3 +7,4 @@ plotly==4.4.1
 numpy==1.18.1
 chart_studio==1.0.0
 Pillow==7.2.0
+xlrd==1.2.0
