@@ -3,6 +3,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import streamlit as st
+from PIL import Image
+import requests
+from io import BytesIO
 
 import warnings
 warnings.filterwarnings("ignore")
@@ -18,6 +21,9 @@ from fbprophet.diagnostics import cross_validation
 from fbprophet.plot import add_changepoints_to_plot
 from fbprophet import Prophet
 
+response = requests.get('https://github.com/michael-william/CBD/raw/master/resources/DS_logo_color.png')
+img = Image.open(BytesIO(response.content))
+st.image(img,caption='dataandstories.com',width=200)
 st.write("""
 # CBD Oil Interest Prediction App
 This app predicts the interest in the search term 'cbd oil' via Google Trends.
