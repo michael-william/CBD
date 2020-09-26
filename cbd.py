@@ -37,8 +37,8 @@ img = Image.open(BytesIO(response.content))
 st.image(img,caption='dataandstories.com',width=200)
 st.write("""
 # CBD Oil Interest Prediction App
-This app predicts the interest in the search term 'cbd oil' via Google Trends using the fbprophet package.
-Numbers represent search interest relative to the highest point on the chart for the given region and time. 
+I built this app originally predicts the interest in the search term 'cbd oil' via Google Trends using the fbprophet package.
+However, I've made it possible for you to put in your own keywords to satisfy other curiosities. Numbers represent search interest relative to the highest point on the chart for the given region and time. 
 A value of 100 is the peak popularity for the term. A value of 50 means that the term is half as popular. 
 A score of 0 means there was not enough data for this term.
 """)
@@ -107,7 +107,7 @@ def main():
             future["cap"] = temp["y"].max()
             forecast = m.predict(future)
             fig = plot_plotly(m, forecast)
-            fig.update_layout(template='plotly_white',title='{} CBD Oil Intrest Prediction'.format(country), xaxis={'title':'Date'}, yaxis={'title':'Intrest Prediction'})
+            fig.update_layout(template='plotly_white',title='{} "{}" Intrest Prediction'.format(country,keywords), xaxis={'title':'Date'}, yaxis={'title':'Intrest Prediction'})
             fig.update_traces(line_color="red",
                   selector=dict(line_color='#0072B2'))
             fig.update_traces(marker_color="royalblue",
