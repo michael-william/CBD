@@ -91,7 +91,7 @@ def main():
         pytrend.build_payload(kw_list=keywords, timeframe='today 5-y', geo=c_code)
         five_years = pytrend.interest_over_time().reset_index()
         if five_years.sum().values[0] < 5:
-            return 'not enough data', 'not enough data', 'not enough data', 'not enough data'
+            return 'not enough data', 'not enough data', 'not enough data', 'not enough data', 'not enough data'
         else:
             five_years = five_years[five_years.isPartial == 'False']
             five_years.drop('isPartial', axis=1, inplace=True)
@@ -108,15 +108,21 @@ def main():
             forecast = m.predict(future)
             fig = plot_plotly(m, forecast)
             fig.update_layout(template='plotly_white',title='{} "{}" Interest Prediction'.format(country,keywords[0]), xaxis={'title':'Date'}, yaxis={'title':'Intrest & Prediction'})
-            fig.update_traces(line_color="red",
+            fig.update_traces(line_color="#F66162",
                   selector=dict(line_color='#0072B2'))
             fig.update_traces(marker_color="royalblue",
                   selector=dict(marker_color='black'))
-            return fig, forecast, periods, pytrend
+            comp = plot_components_plotly(m, forecast)
+            comp.update_layout(template='plotly_white',title='{} "{}" Seasonality Prediction'.format(country,keywords[0]),yaxis={'title':'Prediction'})
+            comp.update_traces(line_color="#F66162",
+                  selector=dict(line_color='#0072B2'))
+            comp.update_traces(marker_color="royalblue",
+                  selector=dict(marker_color='black'))
+            return fig, comp, forecast, periods, pytrend
 
     #if st.button('Analyze and Predict'):
         #p_df = predict_df()
-    fig, forecast, periods, pytrend = predict()
+    fig, comp, forecast, periods, pytrend = predict()
     if fig == 'not enough data':
         st.write('Not enough data')
     else:
@@ -126,12 +132,13 @@ def main():
         forecast_display = forecast_display.set_index('Week')
         forecast_display = np.ceil(forecast_display[['Prediction', 'Trend', 'Lower range', 'Upper range']])
         st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(comp, use_container_width=True)
 
         breakdown_df = pytrend.interest_by_region(inc_low_vol=True, inc_geo_code=False).reset_index().sort_values(keywords, ascending =False)
         breakdown_df.columns = ['Location', 'Relative interest']
-        bd_fig = px.bar(breakdown_df.head(10), x='Location', y='Relative interest', color='Relative interest', height=400)
+        bd_fig = px.bar(breakdown_df.head(10), x='Location', y='Relative interest', color='Relative interest')
         bd_fig.update_layout(title ='Top 10 Locations by Interest for "{}"'.format(keywords[0]))
-        st.plotly_chart(bd_fig, use_container_width=True)
+        st.plotly_chart(bd_fig, use_container_width=True, use_container_height=True)
         
         related_queries = pytrend.related_queries()
         key = list(related_queries.keys())[0]
