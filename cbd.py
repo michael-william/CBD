@@ -32,14 +32,14 @@ from sklearn.preprocessing import MinMaxScaler
 #initiate plotly
 pyoff.init_notebook_mode()
 
-response = requests.get('https://github.com/michael-william/CBD/raw/master/resources/DS_logo_color.png')
-img = Image.open(BytesIO(response.content))
-(width, height) = (img.width // 2, img.height // 2)
-im_resized = img.resize((width, height))
+#response = requests.get('https://github.com/michael-william/CBD/raw/master/resources/DS_logo_color.png')
+#img = Image.open(BytesIO(response.content))
+#(width, height) = (img.width // 2, img.height // 2)
+#im_resized = img.resize((width, height))
 #st.image(img,caption='dataandstories.com',width=200)
 #link = '[Data&Stories](https://dataandstories.com)'
 
-st.markdown('[![this is an image link](https://github.com/michael-william/CBD/raw/master/resources/DS_logo_200.png)](https://dataandstories.com)', unsafe_allow_html=True)
+st.markdown('[![datandstories](https://github.com/michael-william/CBD/raw/master/resources/DS_logo_200.png)](https://dataandstories.com)', unsafe_allow_html=True)
 st.write("""
 # Keyword Interest & Prediction App
 I built this app originally to predict the search interest for the keyword 'cbd oil'. This app connects to Google Trends and uses the the fbprophet package to make predictions for the next 90 days.
