@@ -73,7 +73,15 @@ def main():
     
     c_code = c_code()
 
-    
+    #pytrend = TrendReq(timeout=(10,25), hl='en-US', tz=360)
+    #pytrend.build_payload(kw_list=keywords, timeframe='today 5-y', geo=c_code)
+    #five_years = pytrend.interest_over_time().reset_index()
+    #five_years = five_years[:-1]
+    #five_years.drop('isPartial', axis=1, inplace=True)
+    #five_years.columns = ['ds', 'y']
+    #temp = five_years.copy()
+    #st.write(temp)
+
     def predict():
         pytrend = TrendReq(timeout=(10,25), hl='en-US', tz=360)
         pytrend.build_payload(kw_list=keywords, timeframe='today 5-y', geo=c_code)
@@ -81,7 +89,8 @@ def main():
         if five_years[keywords].sum().values[0] < 5:
             return 'not enough data', 'not enough data', 'not enough data', 'not enough data', 'not enough data'
         else:
-            five_years = five_years[five_years.isPartial == 'False']
+            #five_years = five_years[five_years.isPartial == 'False']
+            five_years = five_years[:-1]
             five_years.drop('isPartial', axis=1, inplace=True)
             five_years.columns = ['ds', 'y']
             temp = five_years.copy()
