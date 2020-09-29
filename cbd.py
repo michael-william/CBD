@@ -34,11 +34,17 @@ pyoff.init_notebook_mode()
 
 response = requests.get('https://github.com/michael-william/CBD/raw/master/resources/DS_logo_color.png')
 img = Image.open(BytesIO(response.content))
-st.image(img,caption='dataandstories.com',width=200)
+(width, height) = (img.width // 2, img.height // 2)
+im_resized = img.resize((width, height))
+#st.image(img,caption='dataandstories.com',width=200)
+#link = '[Data&Stories](https://dataandstories.com)'
+
+st.markdown('[![this is an image link](https://github.com/michael-william/CBD/raw/master/resources/DS_logo_200.png)](https://dataandstories.com)', unsafe_allow_html=True)
 st.write("""
 # Keyword Interest & Prediction App
-I built this app originally predicts the interest in the search term 'cbd oil' via Google Trends using the fbprophet package.
-However, I've made it possible for you to put in your own keywords to satisfy other curiosities. Numbers represent search interest relative to the highest point on the chart for the given region and time. 
+I built this app originally to predict the search interest for the keyword 'cbd oil'. This app connects to Google Trends and uses the the fbprophet package to make predictions for the next 90 days.
+We're also able to see the overall trend and seasonality for the keyword using prophet's componet plot.
+I've now made it possible for you to put in your own keywords to satisfy your search curiosities. Numbers represent search interest relative to the highest point on the chart for the given region and time. 
 A value of 100 is the peak popularity for the term. A value of 50 means that the term is half as popular. 
 A score of 0 means there was not enough data for this term.
 """)
