@@ -54,11 +54,6 @@ def user_input_features():
             countries.append(c)
         country = st.selectbox('Country', countries)
         k_words = st.text_input('Keyword', 'CBD oil')
-        #latitude = st.sidebar.slider('Latitude', 50.770041, 53.333967, 51.2)
-        #longitude = st.sidebar.slider('Longitude', 3.554188, 7.036756, 5.2)
-        #data = {'Description': item,
-                #'Country': country}
-        #features = pd.DataFrame(data, columns = ['Description', 'Country'], index=[0])
         return country, k_words
 
 def main():
@@ -77,20 +72,13 @@ def main():
         return c_code
     
     c_code = c_code()
-    
-    #def pn():    
-     #   if country != 'Worldwide':
-      #      pn=countries_df[countries_df['Code']==c_code]['Name'].values[0].lower().replace(" ", "_")
-       #     return pn
 
-    #pn = pn()
-    
     
     def predict():
         pytrend = TrendReq(timeout=(10,25), hl='en-US', tz=360)
         pytrend.build_payload(kw_list=keywords, timeframe='today 5-y', geo=c_code)
         five_years = pytrend.interest_over_time().reset_index()
-        if five_years.sum().values[0] < 5:
+        if five_years[keywords].sum().values[0] < 5:
             return 'not enough data', 'not enough data', 'not enough data', 'not enough data', 'not enough data'
         else:
             five_years = five_years[five_years.isPartial == 'False']
@@ -157,12 +145,10 @@ def main():
                             ])
         top_fig.update_layout(title='Top 10 Related and Rising Queries for "{}"'.format(keywords[0]), height=500)
 
-        #st.write('Top Related Quries')
-        #st.write(top_query.head().set_index('Top Related Query'))
+        
         st.markdown('Users searching for your term also searched for these quries.Top Queries are the most popular queries.Scoring is on a relative scale where a value of 100 is the most commonly searched query and a value of 50 is a query searched half as often as the most popular term, and so on. Rising Queries are topics with the biggest increase in search frequency since the last time period. Results marked "Breakout" had a tremendous increase, probably because these queries are new and had few (if any) prior searches.')
         st.plotly_chart(top_fig, use_container_width=True)
-        #st.write('Rising Related Quries')
-        #st.write(rising_query.head().set_index('Rising Related Query'))
+        
         st.markdown('Users searching for your term also searched for these topics.Top Topics are the most popular topics.Scoring is on a relative scale where a value of 100 is the most commonly searched topic and a value of 50 is a topic searched half as often as the most popular term, and so on. Rising Related are topics with the biggest increase in search frequency since the last time period. Results marked "Breakout" had a tremendous increase, probably because these topics are new and had few (if any) prior searches.')
         related_topics = pytrend.related_topics()
         key = list(related_topics.keys())[0]
@@ -202,17 +188,7 @@ def main():
                             ])
         rising_fig.update_layout(title='Top 10 Rising Related Topics for "{}"'.format(keywords[0]), height=550)
         st.plotly_chart(rising_fig, use_container_width=True)
-        #st.write('Top Related Topics')
-        #st.write(top_topic.head())
-        #st.write('Rising Related Topics')
-        #st.write(rising_topic.head())
-
-        
-
-    
-
-    
-    #if st.sidebar.button('Predict'):
+       
          
         
 
